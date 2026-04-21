@@ -1,0 +1,157 @@
+{
+  "items": [
+    {
+      "id": "item_empty_water_bottle",
+      "name": "Empty water bottle",
+      "type": "QUEST",
+      "description": "Just an empty water bottle. Maybe I can fill it up somewhere."
+    },
+    {
+      "id": "item_full_water_bottle",
+      "name": "Full water bottle",
+      "type": "QUEST/CONSUMABLE",
+      "description": "Wow the water bottle is filled!! What do I do with it now?"
+    },
+    {
+      "id": "item_small_key",
+      "name": "Small key",
+      "type": "QUEST",
+      "description": "This small key would probably only fit in a small treasure box or safe."
+    },
+    {
+      "id": "item_rotating_gear",
+      "name": "Rotating gear",
+      "type": "QUEST",
+      "description": "Hmmm what could this be for..."
+    },
+    {
+      "id": "item_weighted_cube",
+      "name": "Weighted cube",
+      "type": "QUEST",
+      "description": "This cube is kinda heavy."
+    },
+    {
+      "id": "item_broken_lever_handle",
+      "name": "Broken lever handle",
+      "type": "QUEST",
+      "description": "I can't use this for anything. I should try to fix it in the garage."
+    },
+    {
+      "id": "item_paper",
+      "name": "A piece of paper",
+      "type": "QUEST/CONSUMABLE",
+      "description": "'Caesar cipher with a shift of 1... what could this be for?'"
+    },
+    {
+      "id": "item_lever_handle",
+      "name": "Lever handle",
+      "type": "QUEST",
+      "description": "Hooray its fixed!! What do I do with it now..."
+    },
+    {
+      "id": "item_code",
+      "name": "Code",
+      "type": "QUEST",
+      "description": "Theres a code here but its encrypted...(TQTFKFDOB) I should try to decipher it."
+    }
+  ],
+  "characters": [
+    {
+      "id": "player_timofey",
+      "name": "Timofey Mufasa",
+      "role": "PLAYER",
+      "homeLocationId": "",
+      "dialogue": "Woah this is you. Timofey Mufasa."
+    },
+    {
+      "id": "npc_mysterio",
+      "name": "Mysterious dude",
+      "role": "NPC",
+      "homeLocationId": "loc_darkAlleyway",
+      "bio": "Dressed in dark clothes.",
+      "dialogue": "Welcome Timothy. Your mission is to reach the criminal in the cellar."
+    },
+    {
+      "id": "npc_linda",
+      "name": "Linda Nada Pérez",
+      "role": "NPC",
+      "homeLocationId": "loc_apartment101",
+      "bio": "- Half Filipino, half Serbian\n- Speaks English and a tiny bit of Tagalog\n- Age: 22 (DOB: 6.9.2002)",
+      "dialogue": "Kumusta? I mean, hello. If you want the cellar, find Leon or Tobias."
+    },
+    {
+      "id": "npc_tobi",
+      "name": "Tobias Reviero",
+      "role": "NPC",
+      "homeLocationId": "loc_apartment102",
+      "bio": "- Half Trinidadian, half Czech\n- Age: 20 (DOB: 10.4.2004)\n- Likes: Dexter, Breaking Bad, Invincible\n- Favorite bands: The Strokes, The Fratellis, RATM, Gorillaz",
+      "dialogue": "Yo. I'm busy watching Invincible, but the cellar is a mess."
+    },
+    {
+      "id": "npc_leon",
+      "name": "Leon Marcis Klamer",
+      "role": "NPC",
+      "homeLocationId": "loc_hallway",
+      "bio": "- Half Polish, half African American\n- Speaks English, Polish, understands Czech\n- Age: 22 (DOB: 5.11.2002)\n- Combat fighter and drinker",
+      "dialogue": "I bet I could kick that door down...but im too thirsty to do anything right now."
+    },
+    {
+      "id": "npc_criminal",
+      "name": "The criminal",
+      "role": "NPC",
+      "homeLocationId": "loc_cellar",
+      "bio": "A criminal that deserves to be put down. What will you do?"
+    }
+
+  ],
+  "locations": [
+    {
+      "id": "loc_darkAlleyway",
+      "name": "Dark alleyway",
+      "description": "A foggy alleyway on the outskirts of a city.",
+      "neighbours": ["loc_hallway"]
+    },
+    {
+      "id": "loc_hallway",
+      "name": "Building hallway",
+      "description": "The hallway to an abandoned building.",
+      "neighbours": ["loc_darkAlleyway","loc_apartment101"]
+    },
+    {
+      "id": "loc_apartment101",
+      "name": "Apartment 101",
+      "description": "A simple, small apartment.",
+      "neighbours": ["loc_hallway","loc_apartment102"]
+    },
+    {
+      "id": "loc_apartment102",
+      "name": "Apartment 102",
+      "description": "Another simple small room.",
+      "neighbours": ["loc_apartment101","loc_garage"]
+    },
+    {
+      "id": "loc_garage",
+      "name": "The garage",
+      "description": "A garage...this place might be useful.",
+      "neighbours": ["loc_apartment102","loc_storage"]
+    },
+    {
+      "id": "loc_storage",
+      "name": "Storage room",
+      "description": "I can store things here.",
+      "neighbours": ["loc_garage","loc_balcony"]
+    },
+    {
+      "id": "loc_balcony",
+      "name": "The balcony",
+      "description": "Theres nothing here except for fresh air and some scribbles on a note.",
+      "neighbours": ["loc_storage","loc_cellar"]
+    },
+    {
+      "id": "loc_cellar",
+      "name": "The cold cellar",
+      "description": "The final room.",
+      "neighbours": ["loc_balcony"]
+    }
+  ]
+}

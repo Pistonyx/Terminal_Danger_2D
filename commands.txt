@@ -1,0 +1,8 @@
+[n] Next          - Move deeper into the building.
+[p] Previous      - Move back toward the alley.
+[s] Search        - Look for items in the room.
+[i] Interact      - Talk to NPCs or use objects.
+[d] Drop          - Remove an item from your bag.
+[h] Help          - Display this list of commands.
+[items]           - Display an items description.
+[quit] Quit       - Exit the game.
