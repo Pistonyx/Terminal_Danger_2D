@@ -1,33 +1,22 @@
 package Playuh;
 
-/**
- * Represents a physical object within the game world that a player can discover,
- * collect, or interact with. Items consist of a name and an optional detailed
- * description retrieved from game data.
- * * @author Trong Hieu Tran
- */
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
 
-    /** The display name of the item. */
+    public String id;
     public String name;
-
-    /** A detailed description explaining the item's appearance or purpose. */
+    public String type;
     public String description;
 
-    /**
-     * Constructs a new Item with a specified name.
-     *
-     * @param name The name to be assigned to this item.
-     */
+    public Item() {
+    }
+
     public Item(String name) {
         this.name = name;
     }
 
-    /**
-     * Displays the item's name and its description to the console.
-     * If no description is available or if the description is blank,
-     * a default message is displayed to the player.
-     */
     public void showDescription(){
         System.out.println("\n--- Item: " + name + " ---");
 
