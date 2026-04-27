@@ -21,6 +21,9 @@ public class Room {
 
     public ArrayList<String> storedItems = new ArrayList<>();
 
+    // These are the editable map hot zones for this room, loaded from gamedata.json.
+    public ArrayList<HotZone> hotZones = new ArrayList<>();
+
     public Room() {
     }
 
@@ -31,6 +34,16 @@ public class Room {
     public String getName() {
         return name;
     }
+
+    // This method returns the room's hot zones.
+    public ArrayList<HotZone> getHotZones() {
+        if (hotZones == null) {
+            hotZones = new ArrayList<>();
+        }
+        return hotZones;
+    }
+
+
 
     @Override
     public String toString() {

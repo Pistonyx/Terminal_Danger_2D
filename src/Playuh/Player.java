@@ -13,10 +13,13 @@ public class Player {
     /** The name of the player character. */
     String name;
 
+    /** The maximum amount of items the player can hold. */
+    public static final int MAX_INVENTORY_SIZE = 3;
+
     /** * The player's collection of held items.
      * Initialized with a suggested capacity of 3 items.
      */
-    public ArrayList<String> inventory = new ArrayList<>(3);
+    public ArrayList<String> inventory = new ArrayList<>(MAX_INVENTORY_SIZE);
 
     /** The index of the room the player is currently occupying. */
     public int currentRoomIndex = 0;
@@ -49,6 +52,15 @@ public class Player {
      */
     public boolean hasItem(String i) {
         return inventory.contains(i);
+    }
+
+    /**
+     * Checks if the player's inventory is full.
+     *
+     * @return true if the inventory has reached the maximum size; false otherwise.
+     */
+    public boolean isInventoryFull() {
+        return inventory.size() >= MAX_INVENTORY_SIZE;
     }
 
     /**

@@ -109,49 +109,295 @@
       "id": "loc_darkAlleyway",
       "name": "Dark alleyway",
       "description": "A foggy alleyway on the outskirts of a city.",
-      "neighbours": ["loc_hallway"]
+      "neighbours": [
+        "loc_hallway"
+      ],
+      "hotZones": [
+        {
+          "id": "dark_alley_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "dark_alley_character",
+          "type": "CHARACTER",
+          "gridX": 2,
+          "gridY": 1,
+          "label": "C",
+          "targetId": "npc_mysterio"
+        }
+      ]
     },
     {
       "id": "loc_hallway",
       "name": "Building hallway",
       "description": "The hallway to an abandoned building.",
-      "neighbours": ["loc_darkAlleyway","loc_apartment101"]
+      "neighbours": [
+        "loc_darkAlleyway",
+        "loc_apartment101"
+      ],
+      "hotZones": [
+        {
+          "id": "hallway_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "hallway_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "hallway_character",
+          "type": "CHARACTER",
+          "gridX": 2,
+          "gridY": 1,
+          "label": "C",
+          "targetId": "npc_leon"
+        }
+      ]
     },
     {
       "id": "loc_apartment101",
       "name": "Apartment 101",
       "description": "A simple, small apartment.",
-      "neighbours": ["loc_hallway","loc_apartment102"]
+      "neighbours": [
+        "loc_hallway",
+        "loc_apartment102"
+      ],
+      "hotZones": [
+        {
+          "id": "apartment101_small_key_search",
+          "type": "SEARCH",
+          "gridX": 1,
+          "gridY": 1,
+          "label": "S",
+          "targetId": "item_small_key"
+        },
+        {
+          "id": "apartment101_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "apartment101_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "apartment101_character",
+          "type": "CHARACTER",
+          "gridX": 2,
+          "gridY": 1,
+          "label": "C",
+          "targetId": "npc_linda"
+        }
+      ]
     },
     {
       "id": "loc_apartment102",
       "name": "Apartment 102",
       "description": "Another simple small room.",
-      "neighbours": ["loc_apartment101","loc_garage"]
+      "neighbours": [
+        "loc_apartment101",
+        "loc_garage"
+      ],
+      "hotZones": [
+        {
+          "id": "apartment102_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "apartment102_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "apartment102_character",
+          "type": "CHARACTER",
+          "gridX": 2,
+          "gridY": 1,
+          "label": "C",
+          "targetId": "npc_tobi"
+        },
+        {
+          "id": "apartment102_rotating_gear_search",
+          "type": "SEARCH",
+          "gridX": 3,
+          "gridY": 3,
+          "label": "S",
+          "targetId": "item_rotating_gear"
+        },
+        {
+          "id": "apartment102_safe",
+          "type": "SAFE",
+          "gridX": 1,
+          "gridY": 3,
+          "label": "Safe"
+        }
+      ]
     },
     {
       "id": "loc_garage",
       "name": "The garage",
       "description": "A garage...this place might be useful.",
-      "neighbours": ["loc_apartment102","loc_storage"]
+      "neighbours": [
+        "loc_apartment102",
+        "loc_storage"
+      ],
+      "hotZones": [
+        {
+          "id": "garage_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "garage_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "garage_broken_lever_search",
+          "type": "SEARCH",
+          "gridX": 2,
+          "gridY": 3,
+          "label": "S",
+          "targetId": "item_broken_lever_handle"
+        }
+      ]
     },
     {
       "id": "loc_storage",
       "name": "Storage room",
       "description": "I can store things here.",
-      "neighbours": ["loc_garage","loc_balcony"]
+      "neighbours": [
+        "loc_garage",
+        "loc_balcony"
+      ],
+      "hotZones": [
+        {
+          "id": "storage_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "storage_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "storage_water",
+          "type": "WATER",
+          "gridX": 2,
+          "gridY": 3,
+          "label": "W"
+        },
+        {
+          "id": "storage_empty_bottle_search",
+          "type": "SEARCH",
+          "gridX": 3,
+          "gridY": 1,
+          "label": "S",
+          "targetId": "item_empty_water_bottle"
+        },
+        {
+          "id": "storage_weighted_cube_search",
+          "type": "SEARCH",
+          "gridX": 1,
+          "gridY": 1,
+          "label": "S",
+          "targetId": "item_weighted_cube"
+        }
+      ]
     },
     {
       "id": "loc_balcony",
       "name": "The balcony",
       "description": "Theres nothing here except for fresh air and some scribbles on a note.",
-      "neighbours": ["loc_storage","loc_cellar"]
+      "neighbours": [
+        "loc_storage",
+        "loc_cellar"
+      ],
+      "hotZones": [
+        {
+          "id": "balcony_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "balcony_next",
+          "type": "NEXT_ROOM",
+          "gridX": 4,
+          "gridY": 2,
+          "label": "N"
+        },
+        {
+          "id": "balcony_paper_search",
+          "type": "SEARCH",
+          "gridX": 2,
+          "gridY": 2,
+          "label": "S",
+          "targetId": "item_paper"
+        },
+        {
+          "id": "balcony_code_search",
+          "type": "SEARCH",
+          "gridX": 3,
+          "gridY": 3,
+          "label": "S",
+          "targetId": "item_code"
+        }
+      ]
     },
     {
       "id": "loc_cellar",
       "name": "The cold cellar",
       "description": "The final room.",
-      "neighbours": ["loc_balcony"]
+      "neighbours": [
+        "loc_balcony"
+      ],
+      "hotZones": [
+        {
+          "id": "cellar_previous",
+          "type": "PREV_ROOM",
+          "gridX": 0,
+          "gridY": 2,
+          "label": "P"
+        },
+        {
+          "id": "cellar_character",
+          "type": "CHARACTER",
+          "gridX": 2,
+          "gridY": 1,
+          "label": "C",
+          "targetId": "npc_criminal"
+        }
+      ]
     }
   ]
 }
