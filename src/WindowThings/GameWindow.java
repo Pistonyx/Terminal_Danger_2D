@@ -65,6 +65,11 @@ public class GameWindow {
         mapPanel = new GameMapPanel();
         inputPanel = new GameInputPanel(this::processInput);
 
+        // Set default background images for map and input panels
+        mapPanel.setBackgroundImage(GameTextures.loadImage(""));
+        inputPanel.setBackgroundImage(GameTextures.loadImage(""));
+
+
         // Create the split pane
         JSplitPane splitPane = new JSplitPane(
                 JSplitPane.VERTICAL_SPLIT,
@@ -216,7 +221,7 @@ public class GameWindow {
         commandMap.put("h", new HelpCommand("commands.txt"));
         commandMap.put("n", new MoveNextCommand());
         commandMap.put("p", new MovePrevCommand());
-        commandMap.put("s", new SearchCommand());
+        // Removed: commandMap.put("s", new SearchCommand());
         commandMap.put("i", new InteractCommand());
 
         appendLine("=== MISSION: THE CELLAR ASSASSINATION ===");
@@ -258,6 +263,26 @@ public class GameWindow {
         // If the player types i, interact with the hot zone they are currently standing on
         if (action.equals("i")) {
             handleHotZoneInteraction();
+            return;
+        }
+
+        // Handle 's' command specifically for hotzones
+        if (action.equals("s")) {
+            if (!canUseCurrentRoom()) {
+                appendLine("You are not in a valid room to search.");
+                return;
+            }
+
+            HotZone searchHotZone = mapPanel.getCurrentHotZone(HotZoneType.SEARCH);
+            HotZone itemHotZone = mapPanel.getCurrentHotZone(HotZoneType.ITEM);
+
+            if (searchHotZone != null) {
+                interactWithItemHotZone(searchHotZone);
+            } else if (itemHotZone != null) {
+                interactWithItemHotZone(itemHotZone);
+            } else {
+                appendLine("There is nothing to search here.");
+            }
             return;
         }
 
@@ -431,7 +456,6 @@ public class GameWindow {
             appendLine("You interact with the spot.");
         }
     }
-
 
     // This method finds an item from gamedata.json by its id
     private Item findItemById(String id) {

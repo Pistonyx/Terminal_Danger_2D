@@ -5,6 +5,7 @@ import Playuh.HotZoneType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class GameMapPanel extends JPanel {
     private double playerY = 2.5;
 
     private List<HotZone> hotZones = new ArrayList<>();
+    private Image backgroundImage; // Added for background image
 
     // Constructor
     public GameMapPanel() {
@@ -36,6 +38,12 @@ public class GameMapPanel extends JPanel {
                 "Map"
         ));
         setBackground(Color.WHITE);
+    }
+
+    // Setter for background image
+    public void setBackgroundImage(Image image) {
+        this.backgroundImage = image;
+        repaint();
     }
 
     // Method to reset the player's position to the middle of the map
@@ -147,6 +155,11 @@ public class GameMapPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         try {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Draw background image if available
+            if (backgroundImage != null) {
+                GameTextures.paintBackground(g2, this, backgroundImage);
+            }
 
             // Define the size and position of the grid
             int gridWidth = CELL_SIZE * GRID_COLUMNS;

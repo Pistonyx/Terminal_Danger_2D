@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 public class GameInputPanel extends JPanel {
     private final JTextField inputField;
+    private Image backgroundImage; // Added for background image
 
     /**
      * Constructs a GameInputPanel with a text input field and a send button.
@@ -48,6 +49,20 @@ public class GameInputPanel extends JPanel {
         //Places the input field and send button in the center of the panel
         add(inputField, BorderLayout.CENTER);
         add(sendButton, BorderLayout.EAST);
+    }
+
+    // Setter for background image
+    public void setBackgroundImage(Image image) {
+        this.backgroundImage = image;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            GameTextures.paintBackground(g, this, backgroundImage);
+        }
     }
 
     /**
