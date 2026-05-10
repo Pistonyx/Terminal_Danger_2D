@@ -29,7 +29,7 @@ public class TitleScreen {
 
         // adds a button to the bottom of the screen
         JButton button = new JButton("Start");
-        CustomButton.changeStyle(button);
+        CustomButton.changeStyle(button, null); // Updated to pass null for image
         mainPanel.add(button, BorderLayout.SOUTH);
 
         // Add the custom panel to the JFrame

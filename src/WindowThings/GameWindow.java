@@ -25,6 +25,9 @@ public class GameWindow {
     private final GameInputPanel inputPanel;
     private final GameMapPanel mapPanel;
 
+    // Background images
+    private final Image windowBackground;
+
     // This stores the movement keys that are currently being held down
     private final Set<Integer> pressedMovementKeys = new HashSet<>();
 
@@ -50,6 +53,12 @@ public class GameWindow {
      * Creates a new instance of the game window.
      */
     public GameWindow() {
+        // Load background images
+        windowBackground = GameTextures.loadImage("/images/window_bg.png"); // Placeholder path
+        Image mapBackground = GameTextures.loadImage("/images/map_bg.png"); // Placeholder path
+        Image outputBackground = GameTextures.loadImage("/images/output_bg.png"); // Placeholder path
+        Image inputBackground = GameTextures.loadImage("/images/input_bg.png"); // Placeholder path
+
         // Create the main window
         frame = new JFrame("Terminal Danger");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,18 +66,19 @@ public class GameWindow {
         frame.setLayout(new BorderLayout(8, 8));
 
         // Create the main panel
-        JPanel root = new JPanel(new BorderLayout(8, 8));
+        JPanel root = new JPanel(new BorderLayout(8, 8)) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                GameTextures.paintBackground(g, this, windowBackground);
+            }
+        };
         root.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         frame.setContentPane(root);
 
-        gameOutputPanel = new GameOutputPanel();
-        mapPanel = new GameMapPanel();
-        inputPanel = new GameInputPanel(this::processInput);
-
-        // Set default background images for map and input panels
-        mapPanel.setBackgroundImage(GameTextures.loadImage(""));
-        inputPanel.setBackgroundImage(GameTextures.loadImage(""));
-
+        gameOutputPanel = new GameOutputPanel(outputBackground);
+        mapPanel = new GameMapPanel(mapBackground);
+        inputPanel = new GameInputPanel(this::processInput, inputBackground);
 
         // Create the split pane
         JSplitPane splitPane = new JSplitPane(
@@ -221,7 +231,6 @@ public class GameWindow {
         commandMap.put("h", new HelpCommand("commands.txt"));
         commandMap.put("n", new MoveNextCommand());
         commandMap.put("p", new MovePrevCommand());
-        // Removed: commandMap.put("s", new SearchCommand());
         commandMap.put("i", new InteractCommand());
 
         appendLine("=== MISSION: THE CELLAR ASSASSINATION ===");

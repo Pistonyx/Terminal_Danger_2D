@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public class GameInputPanel extends JPanel {
     private final JTextField inputField;
-    private Image backgroundImage; // Added for background image
+    private Image backgroundImage;
 
     /**
      * Constructs a GameInputPanel with a text input field and a send button.
@@ -15,23 +15,28 @@ public class GameInputPanel extends JPanel {
      * @param onSubmit a Consumer that processes the user's input. It is called with the
      *                 trimmed text from the input field whenever the user submits their input.
      */
-    public GameInputPanel(Consumer<String> onSubmit) {
+    public GameInputPanel(Consumer<String> onSubmit, Image backgroundImage) {
+        this.backgroundImage = backgroundImage;
         //Sets the panel's layout and border'
         setLayout(new BorderLayout(8, 0));
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(4, 0, 0, 0),
                 BorderFactory.createLineBorder(new Color(0, 180, 0), 1)
         ));
-        setBackground(new Color(20, 20, 20));
+        setOpaque(false); // Make panel transparent
 
         //The text input field
         inputField = new JTextField();
         inputField.setFont(new Font("Monospaced", Font.PLAIN, 16));
         inputField.setBorder(BorderFactory.createEmptyBorder(6, 8, 6, 8));
+        inputField.setOpaque(false); // Make input field transparent
+        inputField.setForeground(Color.GREEN);
+        inputField.setCaretColor(Color.GREEN);
+
 
         //The send button
         JButton sendButton = new JButton("Send");
-        CustomButton.changeStyle(sendButton);
+        CustomButton.changeStyle(sendButton, null); // Pass null for no background image
         sendButton.setFocusable(false);
 
         //Submits the input when the user presses Enter or clicks the send button
@@ -51,18 +56,10 @@ public class GameInputPanel extends JPanel {
         add(sendButton, BorderLayout.EAST);
     }
 
-    // Setter for background image
-    public void setBackgroundImage(Image image) {
-        this.backgroundImage = image;
-        repaint();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (backgroundImage != null) {
-            GameTextures.paintBackground(g, this, backgroundImage);
-        }
+        GameTextures.paintBackground(g, this, backgroundImage);
     }
 
     /**
