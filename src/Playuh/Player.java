@@ -24,6 +24,9 @@ public class Player {
     /** The index of the room the player is currently occupying. */
     public int currentRoomIndex = 0;
 
+    /** Tracks which doorway the player entered from. */
+    public HotZoneType lastEntryHotZoneType = HotZoneType.NEXT_ROOM;
+
     /** Flag indicating if the safe in Apartment 102 has been located. */
     public boolean safeDiscovered = false;
 
@@ -31,9 +34,15 @@ public class Player {
     public boolean safeSolved = false;
 
     /** * Tracks the current stage of the safe puzzle.
-     * 0: Needs Rotating gear, 1: Needs Weighted cube, 2: Needs Lever handle.
+     * 0: Needs Small key, 1: Needs Rotating gear, 2: Needs Weighted cube, 3: Needs Lever handle, 4: Solved.
      */
     public int safeProgress = 0;
+
+    /** Tracks if the cellar door has been unlocked by code or other means. */
+    public boolean cellarUnlocked = false; // Added for cellar access
+
+    /** Tracks if Leon has helped kick down the cellar door. */
+    public boolean leonHelped = false; // Added for Leon's help
 
     /**
      * Constructs a new Player with a specified name.
@@ -61,6 +70,16 @@ public class Player {
      */
     public boolean isInventoryFull() {
         return inventory.size() >= MAX_INVENTORY_SIZE;
+    }
+
+    /**
+     * Removes an item from the player's inventory.
+     *
+     * @param itemName The name of the item to be removed.
+     * @return true if the item was removed, false otherwise.
+     */
+    public boolean removeItem(String itemName) {
+        return inventory.remove(itemName);
     }
 
     /**

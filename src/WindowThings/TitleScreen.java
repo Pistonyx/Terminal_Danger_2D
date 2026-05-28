@@ -20,19 +20,19 @@ public class TitleScreen {
         // Set layout for the custom panel
         mainPanel.setLayout(new BorderLayout());
 
-        // adds a text to the middle of the screen
+        // Adds a text to the middle of the screen
         JLabel label = new JLabel("TERMINAL DANGER");
         label.setHorizontalAlignment(SwingConstants.CENTER); // Use SwingConstants for alignment
         label.setForeground(Color.WHITE); // Make text visible on potential dark background
         label.setFont(new Font("Monospaced", Font.BOLD, 30)); // Example font styling
         mainPanel.add(label, BorderLayout.CENTER);
 
-        // adds a button to the bottom of the screen
+        // Adds a button to the bottom of the screen
         JButton button = new JButton("Start");
         CustomButton.changeStyle(button, null); // Updated to pass null for image
         mainPanel.add(button, BorderLayout.SOUTH);
 
-        // Add the custom panel to the JFrame
+        // Add the custom panel to the jframe
         this.TitleScreen.add(mainPanel);
 
         // Load a default background image for the title screen

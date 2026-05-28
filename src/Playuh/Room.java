@@ -19,7 +19,7 @@ public class Room {
 
     private ArrayList<String> lootTable;
 
-    public ArrayList<String> storedItems = new ArrayList<>();
+    public ArrayList<String> storedItems = new ArrayList<>(); // Added for storage hotzone
 
     // These are the editable map hot zones for this room, loaded from gamedata.json.
     public ArrayList<HotZone> hotZones = new ArrayList<>();
@@ -43,7 +43,13 @@ public class Room {
         return hotZones;
     }
 
-
+    // This method adds a hot zone to the room.
+    public void addHotZone(HotZone hotZone) {
+        if (this.hotZones == null) {
+            this.hotZones = new ArrayList<>();
+        }
+        this.hotZones.add(hotZone);
+    }
 
     @Override
     public String toString() {

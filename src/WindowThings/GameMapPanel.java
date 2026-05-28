@@ -40,21 +40,15 @@ public class GameMapPanel extends JPanel {
         setBackground(Color.WHITE);
     }
 
-    // Method to reset the player's position to the middle of the map
-    public void resetPlayerPosition() {
-        playerX = 2.5;
-        playerY = 2.5;
-        repaint();
-    }
 
     // Method to update the hot zones for the current room
     public void setHotZones(List<HotZone> hotZones) {
         if (hotZones == null) {
             this.hotZones = new ArrayList<>();
         } else {
-            this.hotZones = new ArrayList<>(hotZones);
+            this.hotZones = hotZones; // Changed to direct assignment
         }
-
+        System.out.println("DEBUG: GameMapPanel received hotzones: " + this.hotZones); // Debugging line
         repaint();
     }
 
@@ -70,6 +64,25 @@ public class GameMapPanel extends JPanel {
         playerX = Math.max(minPosition, Math.min(maxX, newX));
         playerY = Math.max(minPosition, Math.min(maxY, newY));
 
+        repaint();
+    }
+
+    // Method to set player position based on entry hotzone type
+    public void setPlayerPositionBasedOnEntry(HotZoneType entryType) {
+        switch (entryType) {
+            case NEXT_ROOM: // Came from previous room, spawn on left
+                playerX = 0.1;
+                playerY = GRID_ROWS / 2.0;
+                break;
+            case PREV_ROOM: // Came from next room, spawn on right
+                playerX = GRID_COLUMNS - 0.1 - ((double) PLAYER_SIZE / CELL_SIZE);
+                playerY = GRID_ROWS / 2.0;
+                break;
+            default: // Default to center
+                playerX = GRID_COLUMNS / 2.0;
+                playerY = GRID_ROWS / 2.0;
+                break;
+        }
         repaint();
     }
 
@@ -136,7 +149,6 @@ public class GameMapPanel extends JPanel {
             case CHARACTER -> "C";
             case ITEM -> "I";
             case SEARCH -> "S";
-            case CUSTOM -> "?";
             default -> "?";
         };
     }
@@ -147,19 +159,20 @@ public class GameMapPanel extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g.create();
+
+        // Define the size and position of the grid
+        int gridWidth = CELL_SIZE * GRID_COLUMNS;
+        int gridHeight = CELL_SIZE * GRID_ROWS;
+
+        // Center the grid in the panel
+        int startX = (getWidth() - gridWidth) / 2;
+        int startY = (getHeight() - gridHeight) / 2;
+
         try {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             // Draw background image if available
             GameTextures.paintBackground(g2, this, backgroundImage);
-
-            // Define the size and position of the grid
-            int gridWidth = CELL_SIZE * GRID_COLUMNS;
-            int gridHeight = CELL_SIZE * GRID_ROWS;
-
-            // Center the grid in the panel
-            int startX = (getWidth() - gridWidth) / 2;
-            int startY = (getHeight() - gridHeight) / 2;
 
             // Give the grid a background colour
             g2.setColor(new Color(25, 25, 25));
@@ -177,6 +190,7 @@ public class GameMapPanel extends JPanel {
             }
 
             // Draw the hot zones from the current room
+            System.out.println("DEBUG: GameMapPanel painting hotzones: " + hotZones); // Debugging line
             for (HotZone hotZone : hotZones) {
                 if (hotZone == null) {
                     continue;
@@ -201,7 +215,6 @@ public class GameMapPanel extends JPanel {
             }
 
             // Draw the player's position using free movement coordinates
-            // The player is drawn after the hot zones so it is always visible on top.
             int playerPx = startX + (int) Math.round(playerX * CELL_SIZE);
             int playerPy = startY + (int) Math.round(playerY * CELL_SIZE);
 
@@ -214,9 +227,9 @@ public class GameMapPanel extends JPanel {
             g2.setColor(Color.BLACK);
             g2.drawString("P", playerPx + 7, playerPy + 14);
 
-            // Draw the current grid position for testing/editing hot zones
             g2.setColor(Color.WHITE);
             g2.drawString("Grid: " + getPlayerGridX() + ", " + getPlayerGridY(), startX, startY + gridHeight + 22);
+
         } finally {
             g2.dispose();
         }

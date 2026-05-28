@@ -49,8 +49,10 @@ public class InteractCommand implements GameCommand {
                 && p.hasItem("Full water bottle")) {
             Game.isCellarLocked = false;
             Game.usedLeonToOpenCellar = true;
+            p.leonHelped = true;
+            p.cellarUnlocked = true;
             p.replaceItem("Full water bottle", "Empty water bottle");
-            out.append("\nLeon helps you unlock the cellar.");
+            out.append("\nLeon kicks open the cellar door.");
         }
 
         return out.toString();

@@ -278,10 +278,18 @@
         {
           "id": "garage_broken_lever_search",
           "type": "SEARCH",
-          "gridX": 2,
-          "gridY": 3,
+          "gridX": 1,
+          "gridY": 1,
           "label": "S",
           "targetId": "item_broken_lever_handle"
+        },
+        {
+          "id": "garage_broken_lever_minigame",
+          "type": "CUSTOM",
+          "gridX": 2,
+          "gridY": 3,
+          "label": "Broken Lever Mechanism",
+          "targetId": "broken_lever"
         }
       ]
     },

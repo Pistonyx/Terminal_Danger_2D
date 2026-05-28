@@ -8,5 +8,6 @@ public enum HotZoneType {
     CHARACTER,
     ITEM,
     SEARCH,
-    CUSTOM
+    CUSTOM,
+    STORAGE
 }

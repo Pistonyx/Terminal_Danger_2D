@@ -11,8 +11,17 @@ public class ItemInteract implements GameCommand {
     @Override
     public String execute(Player p, ArrayList<Room> rooms, ArrayList<Item> items) {
         if (p == null || p.inventory.isEmpty()) {
-            return "You have no items to inspect.";
+            return "Your inventory is empty.";
         }
-        return "Use the window prompt to inspect an inventory item.";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("--- Your Inventory ---\n");
+        for (int i = 0; i < p.inventory.size(); i++) {
+            sb.append(String.format("%d. %s\n", i + 1, p.inventory.get(i)));
+        }
+        sb.append("----------------------\n");
+        sb.append("Enter the number of an item to inspect, or 0 to exit.");
+
+        return sb.toString();
     }
 }
