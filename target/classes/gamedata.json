@@ -93,7 +93,7 @@
       "role": "NPC",
       "homeLocationId": "loc_hallway",
       "bio": "- Half Polish, half African American\n- Speaks English, Polish, understands Czech\n- Age: 22 (DOB: 5.11.2002)\n- Combat fighter and drinker",
-      "dialogue": "I bet I could kick that door down...but im too thirsty to do anything right now."
+      "dialogue": "I bet I could kick that door down...but I'm too thirsty to do anything right now. Maybe some water would help me out."
     },
     {
       "id": "npc_criminal",
@@ -338,6 +338,13 @@
           "gridY": 1,
           "label": "S",
           "targetId": "item_weighted_cube"
+        },
+        {
+          "id": "storage_unit",
+          "type": "STORAGE",
+          "gridX": 3,
+          "gridY": 3,
+          "label": "Storage Unit"
         }
       ]
     },

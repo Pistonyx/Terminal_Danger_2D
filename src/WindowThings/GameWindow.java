@@ -32,10 +32,10 @@ public class GameWindow {
     // Minigame state variables
     private String minigameSequence;
     private long minigameStartTime;
-    private boolean leverFixed = false;
+    private boolean leverFixed = false; // Tracks if the lever is permanently fixed
 
-    // Storage state variables "store" or "take"
-    private String storageMode = "";
+    // Storage state variables
+    private String storageMode = ""; // "store" or "take"
 
     // This stores the movement keys that are currently being held down
     private final Set<Integer> pressedMovementKeys = new HashSet<>();
@@ -132,7 +132,7 @@ public class GameWindow {
         SwingUtilities.invokeLater(inputPanel::focusInput);
     }
 
-    // Set up the key bindings for smooth map movement and interaction
+    // This method is used to set up the key bindings for smooth free map movement and interaction
     private void setupKeyBindings() {
         InputMap im = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = frame.getRootPane().getActionMap();
@@ -142,6 +142,7 @@ public class GameWindow {
         bindMovementKey(im, am, KeyEvent.VK_S, "S");
         bindMovementKey(im, am, KeyEvent.VK_D, "D");
 
+        // This key binding lets the player press I to interact with the hot zone they are standing on
         bindInteractKey(im, am);
     }
 
@@ -170,7 +171,7 @@ public class GameWindow {
         });
     }
 
-    // This method lets the player press I to interact with characters, items and interactable spots
+    // This method lets the player press I to interact with characters, items, and interactable spots
     private void bindInteractKey(InputMap im, ActionMap am) {
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), "interactWithHotZone");
 
@@ -249,7 +250,7 @@ public class GameWindow {
 
         appendLine("=== MISSION: THE CELLAR ASSASSINATION ===");
         showCurrentRoom();
-        refreshMap();
+        refreshMap(); // Initial refresh, player spawns in the center by default
     }
 
     // This method is used to process the input from the user
@@ -257,12 +258,12 @@ public class GameWindow {
         appendLine("> " + input);
 
         if (pendingAction != PendingAction.NONE) {
-            // Handle numeric input for ItemInteract or storage selection
+            // Handle numeric input for inspect item or storage selection
             if ((pendingAction == PendingAction.INSPECT_ITEM || pendingAction == PendingAction.STORAGE_ITEM_SELECTION) && input.trim().matches("\\d+")) {
                 handlePendingAction(input.trim());
                 return;
             }
-            // Handle text input for broken lever minigame or confirm minigame or code entry or storage action
+            // Handle text input for broken lever minigame or code entry or storage action
             else if (pendingAction == PendingAction.MINIGAME_BROKEN_LEVER || pendingAction == PendingAction.CONFIRM_MINIGAME_BROKEN_LEVER || pendingAction == PendingAction.CODE_ENTRY || pendingAction == PendingAction.STORAGE_ACTION) {
                 handlePendingAction(input.trim());
                 return;
@@ -276,14 +277,17 @@ public class GameWindow {
         if (action.equals("quit")) {
             appendLine("Thanks for playing.");
             inputPanel.setInputEnabled(false);
+            // Schedule termination after 5 seconds
+            Timer quitTimer = new Timer(5000, e -> System.exit(0));
+            quitTimer.setRepeats(false);
+            quitTimer.start();
             return;
         }
 
         // Cellar access logic
-        // Moving from balcony (index 6) to cellar (index 7)
-        if (action.equals("n") && player.currentRoomIndex == 6) {
+        if (action.equals("n") && player.currentRoomIndex == 6) { // Moving from Balcony (index 6) to Cellar (index 7)
             if (player.cellarUnlocked || player.leonHelped) {
-                // Already unlocked or Leon helped, proceed normally
+                // Already unlocked or Leon helped
                 GameCommand moveCommand = commandMap.get("n");
                 try {
                     String result = moveCommand.execute(player, rooms, items);
@@ -358,14 +362,22 @@ public class GameWindow {
         // Cellar final decision logic
         if (player.currentRoomIndex == 7) { // In the cellar
             if (action.equals("k")) {
-                appendLine("You decide to kill the criminal. The mission is complete, but at what cost?");
-                appendLine("--- GAME OVER: A Bloody End ---");
+                appendLine("You decide to kill the criminal. The mission is complete.");
+                appendLine("Thanks for playing");
                 inputPanel.setInputEnabled(false);
+                // Schedule termination after 5 seconds
+                Timer gameOverTimer = new Timer(5000, e -> System.exit(0));
+                gameOverTimer.setRepeats(false);
+                gameOverTimer.start();
                 return;
             } else if (action.equals("s")) {
-                appendLine("You decide to spare the criminal. They flee, and you are left to ponder your choice.");
-                appendLine("--- GAME OVER: A Moral Dilemma ---");
+                appendLine("You decide to spare the criminal. They run away, and you are left to think about your choice.");
+                appendLine("Thanks for playing");
                 inputPanel.setInputEnabled(false);
+                // Schedule termination after 5 seconds
+                Timer gameOverTimer = new Timer(5000, e -> System.exit(0));
+                gameOverTimer.setRepeats(false);
+                gameOverTimer.start();
                 return;
             }
         }
@@ -387,12 +399,13 @@ public class GameWindow {
             if (command instanceof ItemInteract) {
                 pendingAction = PendingAction.INSPECT_ITEM;
             } else {
+                // For movement commands, update player position based on entry hotzone
                 if (command instanceof MoveNextCommand || command instanceof MovePrevCommand) {
                     showCurrentRoom(); // Show new room description
                     refreshMap(player.lastEntryHotZoneType); // Pass the entry hotzone type
                 } else {
                     showCurrentRoom(); // Refresh output panel
-                    refreshMap(); // Just repaint map with updated hotzones
+                    refreshMap(); // Just repaint map with potentially updated hotzones
                 }
             }
         } catch (Exception e) {
@@ -493,10 +506,10 @@ public class GameWindow {
                     appendLine(character.dialogue); // Leon's initial dialogue
                 }
             } else {
-                appendLine(character.dialogue); // Generic character dialogue
+                appendLine(character.dialogue);
             }
 
-            current.npc = character;
+            current.npc = character; // Update NPC in current room if it was Leon
         }
 
         GameCommand interactCommand = commandMap.get("i");
@@ -568,7 +581,7 @@ public class GameWindow {
             return; // Exit after handling initial unlock
         }
 
-        // Item insertion (only if safeProgress > 0)
+        // Multistep item insertion (only if safeProgress > 0)
         switch (player.safeProgress) {
             case 1: // Needs Rotating gear
                 if (player.hasItem("Rotating gear")) {
@@ -663,7 +676,7 @@ public class GameWindow {
         pendingAction = PendingAction.STORAGE_ACTION;
     }
 
-    // Method to display item description
+    // Helper method to display item description
     private void displayItemDescription(int itemIndex) {
         if (itemIndex > 0 && itemIndex <= player.inventory.size()) {
             String itemName = player.inventory.get(itemIndex - 1);
@@ -762,7 +775,7 @@ public class GameWindow {
                 break;
             case MINIGAME_BROKEN_LEVER:
                 long elapsedTime = System.currentTimeMillis() - minigameStartTime;
-                if (elapsedTime > 5000) { // Make the minigame time 5 seconds
+                if (elapsedTime > 5000) { // 5 seconds
                     appendLine("Time's up! You failed to type the sequence in time.");
                     pendingAction = PendingAction.NONE;
                 } else if (input.equalsIgnoreCase(minigameSequence)) {
@@ -793,6 +806,7 @@ public class GameWindow {
                         if (result != null && !result.isBlank()) {
                             appendLine(result);
                         }
+                        // showCurrentRoom() and refreshMap() will be called below
                     } catch (Exception e) {
                         appendLine("Error moving to cellar: " + e.getMessage());
                     }
@@ -804,7 +818,7 @@ public class GameWindow {
                     appendLine("Incorrect code. Try again, or type 'cancel' to stop.");
                 }
                 break;
-            case STORAGE_ACTION: // Player chooses to store or take
+            case STORAGE_ACTION: // Player choice to store or take
                 if (input.equalsIgnoreCase("store")) {
                     if (player.inventory.isEmpty()) {
                         appendLine("Your inventory is empty. Nothing to store.");
