@@ -56,7 +56,7 @@ public class GameWindow {
         NONE,
         DROP_ITEM,
         INSPECT_ITEM,
-        MINIGAME_BROKEN_LEVER, // Broken lever mini-game
+        MINIGAME_BROKEN_LEVER, // Broken lever minigame
         CONFIRM_MINIGAME_BROKEN_LEVER, // Confirmation step
         CODE_ENTRY, // Cellar code entry
         STORAGE_ACTION, // Choose to store or take
@@ -66,7 +66,7 @@ public class GameWindow {
     /**
      * Creates a new instance of the game window.
      */
-    public GameWindow() {
+    public GameWindow(boolean fullscreen, int width, int height) { // Updated constructor
         // Load background images
         windowBackground = GameTextures.loadImage("/images/window_bg.png"); // Placeholder path
         Image mapBackground = GameTextures.loadImage("/images/map_bg.png"); // Placeholder path
@@ -75,8 +75,21 @@ public class GameWindow {
 
         // Create the main window
         frame = new JFrame("Terminal Danger");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900, 650);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Changed to DO_NOTHING_ON_CLOSE
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                returnToTitleScreen(frame); // Pass the current frame
+            }
+        });
+
+        // Apply settings
+        if (fullscreen) {
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setUndecorated(true);
+        } else {
+            frame.setSize(width, height);
+        }
         frame.setLayout(new BorderLayout(8, 8));
 
         // Create the main panel
@@ -258,7 +271,7 @@ public class GameWindow {
         appendLine("> " + input);
 
         if (pendingAction != PendingAction.NONE) {
-            // Handle numeric input for inspect item or storage selection
+            // Handle numeric input for inspect item or storage item selection
             if ((pendingAction == PendingAction.INSPECT_ITEM || pendingAction == PendingAction.STORAGE_ITEM_SELECTION) && input.trim().matches("\\d+")) {
                 handlePendingAction(input.trim());
                 return;
@@ -275,12 +288,8 @@ public class GameWindow {
         String action = input.trim().toLowerCase();
 
         if (action.equals("quit")) {
-            appendLine("Thanks for playing.");
-            inputPanel.setInputEnabled(false);
-            // Schedule termination after 5 seconds
-            Timer quitTimer = new Timer(5000, e -> System.exit(0));
-            quitTimer.setRepeats(false);
-            quitTimer.start();
+            appendLine("Returning to title screen. Thanks for playing");
+            returnToTitleScreen(frame); // Pass the current frame
             return;
         }
 
@@ -366,16 +375,16 @@ public class GameWindow {
                 appendLine("Thanks for playing");
                 inputPanel.setInputEnabled(false);
                 // Schedule termination after 5 seconds
-                Timer gameOverTimer = new Timer(5000, e -> System.exit(0));
+                Timer gameOverTimer = new Timer(5000, e -> returnToTitleScreen(frame)); // Pass the current frame
                 gameOverTimer.setRepeats(false);
                 gameOverTimer.start();
                 return;
             } else if (action.equals("s")) {
-                appendLine("You decide to spare the criminal. They run away, and you are left to think about your choice.");
-                appendLine("Thanks for playing");
+                appendLine("You decide to spare the criminal. They flee, and you are left to ponder your choice.");
+                appendLine("--- GAME OVER: A Moral Dilemma ---");
                 inputPanel.setInputEnabled(false);
                 // Schedule termination after 5 seconds
-                Timer gameOverTimer = new Timer(5000, e -> System.exit(0));
+                Timer gameOverTimer = new Timer(5000, e -> returnToTitleScreen(frame)); // Pass the current frame
                 gameOverTimer.setRepeats(false);
                 gameOverTimer.start();
                 return;
@@ -946,7 +955,6 @@ public class GameWindow {
     }
 
     // Overloaded method to refresh map AND set player position based on entry hotzone
-    // This should ONLY be called when the room actually changes (e.g., MoveNext/MovePrev)
     private void refreshMap(HotZoneType entryType) {
         if (!canUseCurrentRoom()) {
             mapPanel.setHotZones(new ArrayList<>());
@@ -962,5 +970,10 @@ public class GameWindow {
 
     private void appendLine(String text) {
         gameOutputPanel.appendLine(text);
+    }
+    // New method to return to the TitleScreen
+    private static void returnToTitleScreen(JFrame currentFrame) {
+        currentFrame.dispose(); // Close the current game window
+        SwingUtilities.invokeLater(() -> new TitleScreen().init()); // Open a new TitleScreen
     }
 }
