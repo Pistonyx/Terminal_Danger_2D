@@ -10,7 +10,7 @@ A robust, text-based adventure game engine built in Java. **Terminal Danger** fe
 ---
 
 ## 🚀 Overview
-This project implements an "Escape Room" style adventure where players navigate through various locations, interact with NPCs, and solve items-based puzzles to progress. The engine is built with a focus on clean code principles, utilizing the **Command Pattern** to handle player actions and **GSON** for data-driven world building.
+This project implements an "Escape Room" style adventure where players navigate through various locations, interact with NPCs, and solve items-based puzzles to progress. The engine is built with a focus on clean code principles, utilizing the **Command Pattern** to handle player actions and **JSON** for data-driven world building.
 
 ---
 
@@ -42,14 +42,14 @@ This project implements an "Escape Room" style adventure where players navigate 
 ---
 
 ## 🎮 How to Play
-1. **Launch the Game:** Run the `Main` class (you may need to reinstall gson in the libraries if it doesn't work).
-2. **Navigation:** - Use `n` to move to the **Next** room.
-    - Use `p` to move to the **Previous** room.
-3. **Exploration:** - Use `s` to **Search** for items or check the Storage Room.
-    - Use `i` to **Interact** with NPCs or puzzle objects (like safes or water sources).
+1. **Launch the Game:** Run the `Main` class to start the game.
+2. **Navigation:** - Use `n` while standing on the correct hotzone to move to the **Next** room.
+    - Use `p` while standing on the correct hotzone to move to the **Previous** room.
+3. **Exploration:** - Use `s` while standing on the correct hotzone to **Search** for items or check the Storage Room.
+    - Use `i` while standing on the correct hotzone to **Interact** with NPCs or puzzle objects (like safes or water sources).
 4. **Management:**
-    - Use `d` to **Drop** an item (only available in the Storage Room).
-    - Use `items` to view descriptions of your held items.
+    - Use `d` while standing on the correct hotzone to **Drop** an item (only available in the Storage Room).
+    - Use `items` to view descriptions of your items in your inventory.
 
 ---
 
