@@ -60,7 +60,7 @@ public class TitleScreen {
         this.TitleScreen.add(mainPanel);
 
         // Load a default background image for the title screen
-        mainPanel.setBackgroundImage(GameTextures.loadImage("/images/title_background.jpg")); // Assuming you'll add this image
+        mainPanel.setBackgroundImage(GameTextures.loadImage("/images/title_background.jpg"));
 
         // adds an action to the start button. In this case it closes the window.
         startButton.addActionListener(e ->{

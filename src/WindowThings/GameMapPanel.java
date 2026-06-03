@@ -46,7 +46,7 @@ public class GameMapPanel extends JPanel {
         if (hotZones == null) {
             this.hotZones = new ArrayList<>();
         } else {
-            this.hotZones = hotZones; // Changed to direct assignment
+            this.hotZones = hotZones;
         }
         System.out.println("DEBUG: GameMapPanel received hotzones: " + this.hotZones); // Debugging line
         repaint();
